@@ -1,0 +1,4 @@
+source /home/mta/.ascrc
+
+perl /data/mta4/MTA/bin/disk_space_run_dusk.perl
+
