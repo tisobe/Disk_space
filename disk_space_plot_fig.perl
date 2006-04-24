@@ -59,6 +59,7 @@ if($tmonth < 10){
 $tday   = $umday;
 if($tday < 10){
 	$tday   = '0'."$tday";
+}
 
 $update = "Last Update: $tmonth/$umday/$tyear";
 
