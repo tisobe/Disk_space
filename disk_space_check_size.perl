@@ -185,10 +185,10 @@ if($check > 0){
 	open(OUT, '>./zline.tmp');
 	print OUT  "$line";
 	close(OUT);
-system("cat /data/mta/Script/Disk_check/zline.tmp |mailx -s \"Subject: Disk Space Warning\n\" -r  mta\@head.cfa.harvard.edu isobe\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu nbizunok\@head.cfa.harvard.edu 6177214360\@vtext.com");
+system("cat ./zline.tmp |mailx -s \"Subject: Disk Space Warning\n\" -r  mta\@head.cfa.harvard.edu isobe\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu nbizunok\@head.cfa.harvard.edu 6177214360\@vtext.com");
 # fixed typo in brad address. BDS 1/28/05
 # add nbizunok. BDS 3/25/05
-	system("rm zline.tmp");
+	system("rm ./zline.tmp");
 
 }
 #
