@@ -7,7 +7,7 @@ use PGPLOT;
 #			       if it is beyond a limit				#
 #										#
 #		author: t. isobe (tisobe@cfa.harvard.edu)			#
-#		last update: Apr. 13, 2006					#
+#		last update: May  01, 2006					#
 #			added mays, aaron					#
 #										#
 #################################################################################
@@ -139,7 +139,7 @@ close(FH);
 #
 #---- /data/mays/
 #
-system("df -k  /data/mays/ > zspace");
+system("ls /data/mays/ > zspace; df -k  /data/mays/ > zspace");
 open(FH, "./zspace");
 while(<FH>){
 	chomp $_;
@@ -158,7 +158,7 @@ close(FH);
 #
 #---- /data/aaron/
 #
-system("df -k  /data/aaron/ > zspace");
+system("ls /data/aaron/> zspace; df -k  /data/aaron/ > zspace");
 open(FH, "./zspace");
 while(<FH>){
 	chomp $_;
@@ -435,7 +435,7 @@ for($k = 0; $k < $cnt; $k++){
 #--- special treatment, if there are not enough data points, use a marker
 #
         if($dcnt < 50){
-                pgpt(1, $time[$k], $space5[$k], 3);
+                pgpt(1, $time[$k], $space6[$k], 3);
         }
 		$tstart = $k + 1;
 		last OUTER;
@@ -444,7 +444,7 @@ for($k = 0; $k < $cnt; $k++){
 for($k = $tstart; $k < $cnt; $k++){
 	pgdraw($time[$k], $space6[$k]);
         if($dcnt < 50){
-                pgpt(1, $time[$k], $space5[$k], 3);
+                pgpt(1, $time[$k], $space6[$k], 3);
         }
 }
 pgsci(1);
