@@ -148,7 +148,8 @@ while(<FH>){
 		@btemp = split(/\%/, $atemp[4]);
 		$percent = $btemp[0];
 		$per5 = $percent;
-		if($percent > 95){
+#		if($percent > 95){
+		if($percent > 99){
 			$check++;
 			$line = "$line".'/data/mays/ is at '."$percent".'% capacity'."\n";
 		}
