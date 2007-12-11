@@ -7,7 +7,7 @@ use PGPLOT;
 #			       if it is beyond a limit				#
 #										#
 #		author: t. isobe (tisobe@cfa.harvard.edu)			#
-#		last update: May  01, 2006					#
+#		last update: Dec  10, 2007					#
 #			added mays, aaron					#
 #										#
 #################################################################################
@@ -63,7 +63,7 @@ close(FH);
 #--- for /data/mta1/, /data/mta2/, /data/mta3, you need to use
 #--- "ls /data/mta1/", to makes df /data/mta1/ to work. I have no idea why....
 #
-system("ls /data/mta1/ > zspace; df /data/mta1/ > zspace");
+system("ls /data/mta1/ > zspace; df -k /data/mta1/ > zspace");
 open(FH, "./zspace");
 while(<FH>){
 	chomp $_;
@@ -82,7 +82,7 @@ close(FH);
 #
 #--- /data/mta2/
 #
-system("ls /data/mta2/ > zspace; df /data/mta2/ > zspace");
+system("ls /data/mta2/ > zspace; df -k /data/mta2/ > zspace");
 open(FH, "./zspace");
 while(<FH>){
 	chomp $_;
@@ -101,7 +101,7 @@ close(FH);
 #
 #---- /data/mta3/    this disk is not with mta anymore, but we still monitor
 #
-system("ls /data/mta3/ > zspace; df /data/mta3/ > zspace");
+system("ls /data/mta3/ > zspace; df -k  /data/mta3/ > zspace");
 open(FH, "./zspace");
 while(<FH>){
 	chomp $_;
