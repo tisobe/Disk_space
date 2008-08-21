@@ -7,7 +7,7 @@ use PGPLOT;
 #			       if it is beyond a limit				#
 #										#
 #		author: t. isobe (tisobe@cfa.harvard.edu)			#
-#		last update: Dec  10, 2007					#
+#		last update: Aug  21, 2008					#
 #			added mays, aaron					#
 #										#
 #################################################################################
@@ -51,7 +51,7 @@ while(<FH>){
 		@btemp = split(/\%/, $atemp[4]);
 		$percent = $btemp[0];
 		$per0 = $percent;
-		if($percent > 90){
+		if($percent > 95){
 			$check++;
 			$line = '/data/mta/  is at '."$percent".'% capacity'."\n";
 		}
