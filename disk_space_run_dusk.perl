@@ -7,7 +7,7 @@
 #										#
 #	author: t. isobe (tisobe@cfa.harvard.edu)				#
 #										#
-#	last update: Apr. 13, 2006						#
+#	last update: Oct. 29, 2008						#
 #										#
 #################################################################################
 
@@ -45,11 +45,11 @@ system("cd /data/mta; dusk > $run_dir/dusk_check");
 system("cd /data/mta4; dusk > $run_dir/dusk_check2");
 
 #
-#--- /data/mays/
+#--- /data/swolk/MAYS/
 #
-system("cd /data/mays; dusk > $run_dir/dusk_check3");
+system("cd /data/swolk/MAYS; dusk > $run_dir/dusk_check3");
 
 #
-#--- /data/aaron/
+#--- /data/swolk/AARON/
 #
-system("cd /data/aaron; dusk > $run_dir/dusk_check4");
+system("cd /data/swolk/AARON; dusk > $run_dir/dusk_check4");

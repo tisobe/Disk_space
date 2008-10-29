@@ -7,7 +7,7 @@ use PGPLOT;
 #												#
 #		author: t. isobe (tisobe@cfa.harvard.edu)					#
 #												#
-#		last update: Apr. 13, 2006							#
+#		last update: Oct. 29, 2008							#
 #												#
 #################################################################################################
 
@@ -39,9 +39,9 @@ foreach (@name_list){
 	$name_num++;
 }
 
-$line          = `df /data/mta/`;
+$line          = `df -k /data/mta/`;
 @atemp         = split(/\s+/, $line);
-$disk_capacity = $atemp[8]/100;
+$disk_capacity = $atemp[1];
 
 #################################################################################
 

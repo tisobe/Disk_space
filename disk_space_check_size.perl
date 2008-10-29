@@ -7,8 +7,7 @@ use PGPLOT;
 #			       if it is beyond a limit				#
 #										#
 #		author: t. isobe (tisobe@cfa.harvard.edu)			#
-#		last update: Aug  21, 2008					#
-#			added mays, aaron					#
+#		last update: Oct  29, 2008					#
 #										#
 #################################################################################
 
@@ -137,9 +136,9 @@ while(<FH>){
 }
 close(FH);
 #
-#---- /data/mays/
+#---- /data/swolk/MAYS/
 #
-system("ls /data/mays/ > zspace; df -k  /data/mays/ > zspace");
+system("ls /data/swolk/MAYS/ > zspace; df -k  /data/swolk/MAYS/ > zspace");
 open(FH, "./zspace");
 while(<FH>){
 	chomp $_;
@@ -151,15 +150,15 @@ while(<FH>){
 #		if($percent > 95){
 		if($percent > 99){
 			$check++;
-			$line = "$line".'/data/mays/ is at '."$percent".'% capacity'."\n";
+			$line = "$line".'/data/swolk/MAYS/ is at '."$percent".'% capacity'."\n";
 		}
 	}
 }
 close(FH);
 #
-#---- /data/aaron/
+#---- /data/swolk/AARON/
 #
-system("ls /data/aaron/> zspace; df -k  /data/aaron/ > zspace");
+system("ls /data/swolk/AARON/> zspace; df -k  /data/swolk/AARON/ > zspace");
 open(FH, "./zspace");
 while(<FH>){
 	chomp $_;
@@ -170,7 +169,7 @@ while(<FH>){
 		$per6 = $percent;
 		if($percent > 95){
 			$check++;
-			$line = "$line".'/data/aaron/ is at '."$percent".'% capacity'."\n";
+			$line = "$line".'/data/swolk/AARON/ is at '."$percent".'% capacity'."\n";
 		}
 	}
 }
@@ -266,7 +265,7 @@ foreach $ent (@save_list){
 	push(@space3, $atemp[4]);
 	push(@space4, $atemp[5]);
 #
-#--- special cases here. mays and aaron added later. put zero to unchecked  past date
+#--- special cases here. MAYS and AARON added later. put zero to unchecked  past date
 #
 	if($atemp[6] =~ /\d/){
 		push(@space5, $atemp[6]);
@@ -386,7 +385,7 @@ $xt = $xmin + 0.05 * $xdiff;
 $yt = $ymax - 0.08 * ($ymax - $ymin);
 pgptext($xt, $yt, 0.0, 0.0, "/data/mta4/");
 #
-#--- disk: mays 
+#--- disk: MAYS 
 #
 pgsvp(0.1, 1.0, 0.38, 0.68);
 pgswin($xmin, $xmax, $ymin, $ymax);
@@ -416,12 +415,12 @@ for($k = $tstart; $k < $cnt; $k++){
 pgsci(1);
 $xt = $xmin + 0.05 * $xdiff;
 $yt = $ymax - 0.08 * ($ymax - $ymin);
-pgptext($xt, $yt, 0.0, 0.0, "/data/mays/");
+pgptext($xt, $yt, 0.0, 0.0, "/data/swolk/MAYS/");
 $xt = $xmin - 0.05 * $xdiff;
 $yt = $ymax - 0.5 * ($ymax - $ymin);
 pgptext($xt, $yt, 90.0, 0.5,  "Disk Space Used (%)");
 #
-#--- disk: aaron
+#--- disk: AARON
 #
 pgsvp(0.10, 1.0, 0.07, 0.37);
 pgswin($xmin, $xmax, $ymin, $ymax);
@@ -452,7 +451,7 @@ for($k = $tstart; $k < $cnt; $k++){
 pgsci(1);
 $xt = $xmin + 0.05 * $xdiff;
 $yt = $ymax - 0.08 * ($ymax - $ymin);
-pgptext($xt, $yt, 0.0, 0.0,  "/data/aaron/");
+pgptext($xt, $yt, 0.0, 0.0,  "/data/swolk/AARON/");
 $xt = $xmin + 0.5 * $xdiff;
 $yt = $ymin - 0.2 * ($ymax - $ymin);
 pgptext($xt, $yt, 0.0, 0.5,  "Time (DOM)");

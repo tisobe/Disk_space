@@ -3,11 +3,13 @@ use PGPLOT;
 
 #################################################################################################
 #                                                                                               #
-#       disk_space_read_dusk4.perl: check /data/aaron/ disk space usages                        #
+#       disk_space_read_dusk4.perl: check /data/swolk/AARON/ disk space usages                  #
 #                                                                                               #
+#		this disk was /data/aaron/ prior to 10/29/08					#
+#												#
 #               author: t. isobe (tisobe@cfa.harvard.edu)                                       #
 #                                                                                               #
-#               last update: Apr. 13, 2006                                                      #
+#               last update: Oct. 29, 2008                                                      #
 #                                                                                               #
 #################################################################################################
 
@@ -39,9 +41,9 @@ foreach (@name_list){
         $name_num++;
 }
 
-$line          = `df /data/aaron/`;
+$line          = `df -k /data/swolk/AARON/`;
 @atemp         = split(/\s+/, $line);
-$disk_capacity = $atemp[8]/100;
+$disk_capacity = $atemp[1];
 
 $set_ymin = 10;
 $set_ymax = 70;
@@ -191,7 +193,7 @@ pgsci(1);
 pgsch(2);
 pgslw(3);
 
-pglabel("Time (DOM)","Disk Space Used (%)", "Disk Space Usage of /data/aaron/");
+pglabel("Time (DOM)","Disk Space Used (%)", "Disk Space Usage of /data/swolk/AARON/");
 pgclos();
 
 system("echo ''|gs -sDEVICE=ppmraw  -r256x256 -q -NOPAUSE -sOutputFile=-  pgplot.ps| $bin_dir/pnmflip -r270 | $bin_dir/pnmcrop -bottom | $bin_dir/ppmtogif > $fig_out/data_aaron.gif");
