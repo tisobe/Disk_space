@@ -278,6 +278,7 @@ if($diff == 0){
 #---- /data/swolk/
 #
 
+
 pgbegin(0, "/cps",1,1);
 pgsubp(1,2);
 pgsch(2);
@@ -335,7 +336,7 @@ pgsch(2);
 pgslw(3);
 
 $ymin = $set_ymin;
-$ymax = $set_ymax;
+$ymax = 10;
 
 pgenv($xmin, $xmax, $ymin, $ymax, 0, 0);
 pgsch(2);
@@ -371,6 +372,9 @@ pglabel("Time (DOM)","Disk Space Used (%)", "Disk Space Usage of /data/swolk/MAY
 #
 #--- AARON
 #
+
+$ymin = $set_ymin;
+$ymax = 15;
 
 pgenv($xmin, $xmax, $ymin, $ymax, 0, 0);
 pgsch(2);
