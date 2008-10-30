@@ -222,7 +222,8 @@ close(FH);
 #
 #--- current data in one line
 #
-$line = "$time\t"."$per0\t"."$per1\t"."$per2\t"."$per3\t"."$per4\t"."$per5\t"."$per6";
+#$line = "$time\t"."$per0\t"."$per1\t"."$per2\t"."$per3\t"."$per4\t"."$per5\t"."$per6";
+$line = "$time\t"."$per0\t"."$per1\t"."$per2\t"."$per4\t"."$per5\t";
 #
 #--- check whether this line is a duplicate of the past data
 #
@@ -259,26 +260,26 @@ $cnt = 0;
 foreach $ent (@save_list){
 	@atemp = split(/\s+/, $ent);
 	push(@time,   $atemp[0]);
-	push(@space0, $atemp[1]);
-	push(@space1, $atemp[2]);
-	push(@space2, $atemp[3]);
-	push(@space3, $atemp[4]);
-	push(@space4, $atemp[5]);
+	push(@space0, $atemp[1]);	# mta
+	push(@space1, $atemp[2]);	# mta1
+	push(@space2, $atemp[3]);	# mta2
+#	push(@space3, $atemp[4]);	# mta3  ---- discontinued 
+	push(@space4, $atemp[4]);	# mta4
 #
 #--- special cases here. MAYS and AARON added later. put zero to unchecked  past date
 #
 #---- space for /data/mays/ is now used for /data/swolk (10/29/08: DOM: 3382)
 #
-	if($atemp[6] =~ /\d/){
-		push(@space5, $atemp[6]);
+	if($atemp[5] =~ /\d/){
+		push(@space5, $atemp[5]);
 	}else{
 		push(@space5, '0');
 	}	
-	if($atemp[7] =~ /\d/){
-		push(@space6, $atemp[7]);
-	}else{
-		push(@space6, '0');
-	}	
+#	if($atemp[7] =~ /\d/){
+#		push(@space6, $atemp[7]);
+#	}else{
+#		push(@space6, '0');
+#	}	
 	$cnt++;
 }
 #
@@ -429,6 +430,8 @@ pgptext($xt, $yt, 0.0, 0.0, "/data/swolk/");
 $xt = $xmin - 0.05 * $xdiff;
 $yt = $ymax - 0.5 * ($ymax - $ymin);
 pgptext($xt, $yt, 90.0, 0.5,  "Disk Space Used (%)");
+$xt = $xmin + 0.5 * $xdiff;
+$yt = $ymin - 0.2 * ($ymax - $ymin);
 pgptext($xt, $yt, 0.0, 0.5,  "Time (DOM)");
 
 pgclos();
