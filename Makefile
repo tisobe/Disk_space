@@ -5,7 +5,7 @@ TASK = Disk_space
 
 include /data/mta4/MTA/include/Makefile.MTA
 
-BIN  = disk_space_wrap_script1 disk_space_wrap_script2 disk_space_main_script_1 disk_space_main_script_2 disk_space_run_dusk.perl disk_space_plot_fig.perl disk_space_check_size.perl disk_space_read_dusk.perl disk_space_read_dusk2.perl disk_space_read_dusk3.perl disk_space_read_dusk4.perl
+BIN  = disk_space_wrap_script1 disk_space_wrap_script2 disk_space_main_script_1 disk_space_main_script_2 disk_space_run_dusk.perl disk_space_plot_fig.perl disk_space_check_size.perl disk_space_read_dusk.perl disk_space_read_dusk2.perl disk_space_read_dusk3.perl disk_space_read_dusk4.perl disk_space_read_dusk5.perl 
 
 DOC  = README
 

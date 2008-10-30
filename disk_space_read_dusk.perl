@@ -7,7 +7,7 @@ use PGPLOT;
 #												#
 #		author: t. isobe (tisobe@cfa.harvard.edu)					#
 #												#
-#		last update: Oct. 29, 2008							#
+#		last update: Oct. 30, 2008							#
 #												#
 #################################################################################################
 
@@ -32,7 +32,8 @@ $fig_out  = $atemp[4];
 #
 #--- and other settings
 #
-@name_list = ('Script','DataSeeker','Test','CAL','TMP','MOON','CTI_mon','mta_db');
+#@name_list = ('Script','DataSeeker','Test','CAL','TMP','MOON','CTI_mon','mta_db');
+@name_list = ('Script','DataSeeker','Test','CAL');
 
 $name_num  = 0;
 foreach (@name_list){
@@ -41,7 +42,13 @@ foreach (@name_list){
 
 $line          = `df -k /data/mta/`;
 @atemp         = split(/\s+/, $line);
-$disk_capacity = $atemp[1];
+OUTER:
+foreach $ent (@atemp){
+        if($ent =~ /\d/ && $ent !~ /vol/){
+                $disk_capacity = $ent/100;
+                last OUTER;
+        }
+}
 
 #################################################################################
 
@@ -151,7 +158,7 @@ pgslw(3);
 #
 #--- a plot for the largest one 
 #
-$ymin = 70;
+$ymin = 40;
 $ymax = 100;
 
 pgenv($xmin, $xmax, $ymin, $ymax, 0, 0);

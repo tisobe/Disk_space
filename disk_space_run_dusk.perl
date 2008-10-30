@@ -7,7 +7,7 @@
 #										#
 #	author: t. isobe (tisobe@cfa.harvard.edu)				#
 #										#
-#	last update: Oct. 29, 2008						#
+#	last update: Oct. 30, 2008						#
 #										#
 #################################################################################
 
@@ -53,3 +53,8 @@ system("cd /data/swolk/MAYS; dusk > $run_dir/dusk_check3");
 #--- /data/swolk/AARON/
 #
 system("cd /data/swolk/AARON; dusk > $run_dir/dusk_check4");
+
+#
+#--- /data/swolk/	#---- this takes too long; dropped
+#
+#system("cd /data/swolk/; dusk > $run_dir/dusk_check5");

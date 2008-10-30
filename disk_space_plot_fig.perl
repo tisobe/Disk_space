@@ -6,7 +6,7 @@
 #                                                                                               #
 #               author: t. isobe (tisobe@cfa.harvard.edu)                                       #
 #                                                                                               #
-#               last update: Apr. 13, 2006                                                      #
+#               last update: Oct. 29, 2008                                                      #
 #                                                                                               #
 #################################################################################################
 
@@ -36,9 +36,10 @@ system("perl $bin_dir/disk_space_read_dusk.perl");
 
 system("perl $bin_dir/disk_space_read_dusk2.perl");
 
-system("perl $bin_dir/disk_space_read_dusk3.perl");
+system("perl $bin_dir/disk_space_read_dusk5.perl");	#---- /data/swolk added 10/29/08
 
-system("perl $bin_dir/disk_space_read_dusk4.perl");
+#system("perl $bin_dir/disk_space_read_dusk3.perl");	#---- /data/mays  removed
+#system("perl $bin_dir/disk_space_read_dusk4.perl");	#---- /data/aaron removed
 
 system("rm -r param ./dusk* zspace dir_list");
 

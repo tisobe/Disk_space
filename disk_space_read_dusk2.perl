@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#www', 'HRC', 'CUS', 'Repos', 'Deriv');!/usr/bin/perl
 use PGPLOT;
 
 #################################################################################################
@@ -7,7 +7,7 @@ use PGPLOT;
 #                                                                                               #
 #               author: t. isobe (tisobe@cfa.harvard.edu)                                       #
 #                                                                                               #
-#               last update: Oct. 29, 2008                                                      #
+#               last update: Oct. 30, 2008                                                      #
 #                                                                                               #
 #################################################################################################
 
@@ -32,7 +32,8 @@ $fig_out  = $atemp[4];
 #
 #--- and other settings
 #
-@name_list = ('AExtract','www','MTA_DOC','alert_test','space_weather','MTA');
+#@name_list = ('AExtract','www','MTA_DOC','alert_test','space_weather','MTA');
+@name_list = ('AExtract', 'www', 'HRC', 'CUS', 'Repos', 'Deriv');
 
 $name_num  = 0;
 foreach (@name_list){
@@ -41,7 +42,13 @@ foreach (@name_list){
 
 $line          = `df -k /data/mta4/`;
 @atemp         = split(/\s+/, $line);
-$disk_capacity = $atemp[1];
+OUTER:
+foreach $ent (@atemp){
+        if($ent =~ /\d/ && $ent !~ /vol/){
+                $disk_capacity = $ent/100;
+                last OUTER;
+        }
+}
 
 $set_ymin = 10;
 $set_ymax = 70;
@@ -165,7 +172,7 @@ $ymax = $set_ymax;
 pgenv($xmin, $xmax, $ymin, $ymax, 0, 0);
 pgsch(2);
 pgslw(3);
-for($k = 0; $k < 2; $k++){
+for($k = 0; $k < $name_num; $k++){
 	$j = $k + 2;
 	pgsci($j);
 	pgmove($time[0], ${data.$k}[0]);

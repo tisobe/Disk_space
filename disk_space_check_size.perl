@@ -100,22 +100,22 @@ close(FH);
 #
 #---- /data/mta3/    this disk is not with mta anymore, but we still monitor
 #
-system("ls /data/mta3/ > zspace; df -k  /data/mta3/ > zspace");
-open(FH, "./zspace");
-while(<FH>){
-	chomp $_;
-	@atemp = split(/\s+/, $_);
-	if($atemp[1] =~ /\d/){
-		@btemp = split(/\%/, $atemp[4]);
-		$percent = $btemp[0];
-		$per3 = $percent;
-		if($percent > 90){
-			$check++;
-			$line = "$line".'/data/mta3/ is at '."$percent".'% capacity'."\n";
-		}
-	}
-}
-close(FH);
+#system("ls /data/mta3/ > zspace; df -k  /data/mta3/ > zspace");
+#open(FH, "./zspace");
+#while(<FH>){
+#	chomp $_;
+#	@atemp = split(/\s+/, $_);
+#	if($atemp[1] =~ /\d/){
+#		@btemp = split(/\%/, $atemp[4]);
+#		$percent = $btemp[0];
+#		$per3 = $percent;
+#		if($percent > 90){
+#			$check++;
+#			$line = "$line".'/data/mta3/ is at '."$percent".'% capacity'."\n";
+#		}
+#	}
+#}
+#close(FH);
 #
 #--- /data/mta4/
 #
@@ -136,9 +136,9 @@ while(<FH>){
 }
 close(FH);
 #
-#---- /data/swolk/MAYS/
+#---- /data/swolk/
 #
-system("ls /data/swolk/MAYS/ > zspace; df -k  /data/swolk/MAYS/ > zspace");
+system("ls /data/swolk/ > zspace; df -k  /data/swolk/ > zspace");
 open(FH, "./zspace");
 while(<FH>){
 	chomp $_;
@@ -147,10 +147,9 @@ while(<FH>){
 		@btemp = split(/\%/, $atemp[4]);
 		$percent = $btemp[0];
 		$per5 = $percent;
-#		if($percent > 95){
-		if($percent > 99){
+		if($percent > 95){
 			$check++;
-			$line = "$line".'/data/swolk/MAYS/ is at '."$percent".'% capacity'."\n";
+			$line = "$line".'/data/swolk/ is at '."$percent".'% capacity'."\n";
 		}
 	}
 }
@@ -158,22 +157,23 @@ close(FH);
 #
 #---- /data/swolk/AARON/
 #
-system("ls /data/swolk/AARON/> zspace; df -k  /data/swolk/AARON/ > zspace");
-open(FH, "./zspace");
-while(<FH>){
-	chomp $_;
-	@atemp = split(/\s+/, $_);
-	if($atemp[1] =~ /\d/){
-		@btemp = split(/\%/, $atemp[4]);
-		$percent = $btemp[0];
-		$per6 = $percent;
-		if($percent > 95){
-			$check++;
-			$line = "$line".'/data/swolk/AARON/ is at '."$percent".'% capacity'."\n";
-		}
-	}
-}
-close(FH);
+#system("ls /data/swolk/AARON/> zspace; df -k  /data/swolk/AARON/ > zspace");
+#open(FH, "./zspace");
+#while(<FH>){
+#	chomp $_;
+#	@atemp = split(/\s+/, $_);
+#	if($atemp[1] =~ /\d/){
+#		@btemp = split(/\%/, $atemp[4]);
+#		$percent = $btemp[0];
+#		$per6 = $percent;
+#		if($percent > 95){
+#			$check++;
+#			$line = "$line".'/data/swolk/AARON/ is at '."$percent".'% capacity'."\n";
+#		}
+#	}
+#}
+#close(FH);
+
 #
 #---- sending out warning email, if any of the disk exceeded the limit
 #
@@ -266,6 +266,8 @@ foreach $ent (@save_list){
 	push(@space4, $atemp[5]);
 #
 #--- special cases here. MAYS and AARON added later. put zero to unchecked  past date
+#
+#---- space for /data/mays/ is now used for /data/swolk (10/29/08: DOM: 3382)
 #
 	if($atemp[6] =~ /\d/){
 		push(@space5, $atemp[6]);
@@ -362,16 +364,22 @@ pgptext($xt, $yt, 0.0, 0.5,  "Time (DOM)");
 pgclos();
 
 system("echo ''|gs -sDEVICE=ppmraw  -r256x256 -q -NOPAUSE -sOutputFile=-  pgplot.ps| $bin_dir/pnmflip -r270 | $bin_dir/ppmtogif > $fig_out/disk_space1.gif");
+
+
 #
 #--- a second panel
 #
+
+
 pgbegin(0, "/cps",1,1);
 pgsubp(1,1);
 pgsch(1);
 pgslw(3);
+
 #
 #--- disk: mta4
 #
+
 pgsvp(0.1, 1.0, 0.69, 0.99);
 pgswin($xmin, $xmax, $ymin, $ymax);
 pgbox(ABCST,0.0 , 0.0, ABCNSTV, 0.0, 0.0);
@@ -384,16 +392,18 @@ pgsci(1);
 $xt = $xmin + 0.05 * $xdiff;
 $yt = $ymax - 0.08 * ($ymax - $ymin);
 pgptext($xt, $yt, 0.0, 0.0, "/data/mta4/");
+
 #
-#--- disk: MAYS 
+#--- disk: /data/swolk
 #
+
 pgsvp(0.1, 1.0, 0.38, 0.68);
 pgswin($xmin, $xmax, $ymin, $ymax);
-pgbox(ABCST,0.0 , 0.0, ABCNSTV, 0.0, 0.0);
+pgbox(ABCNST,0.0 , 0.0, ABCNSTV, 0.0, 0.0);
 pgsci(3);
 $tstart = 0;
 OUTER:
-for($k = 0; $k < $cnt; $k++){
+for($k = 1616; $k < $cnt; $k++){	#---- we started checking /data/swolk/ from dom 3390, entry # 1616
 	if($space5[$k] > 0){
 		pgmove($time[$k], $space5[$k]);
 #
@@ -415,45 +425,10 @@ for($k = $tstart; $k < $cnt; $k++){
 pgsci(1);
 $xt = $xmin + 0.05 * $xdiff;
 $yt = $ymax - 0.08 * ($ymax - $ymin);
-pgptext($xt, $yt, 0.0, 0.0, "/data/swolk/MAYS/");
+pgptext($xt, $yt, 0.0, 0.0, "/data/swolk/");
 $xt = $xmin - 0.05 * $xdiff;
 $yt = $ymax - 0.5 * ($ymax - $ymin);
 pgptext($xt, $yt, 90.0, 0.5,  "Disk Space Used (%)");
-#
-#--- disk: AARON
-#
-pgsvp(0.10, 1.0, 0.07, 0.37);
-pgswin($xmin, $xmax, $ymin, $ymax);
-pgbox(ABCNST,0.0 , 0.0, ABCNSTV, 0.0, 0.0);
-pgsci(4);
-pgmove($time[0], $space6[0]);
-$tstart = 0;
-OUTER:
-for($k = 0; $k < $cnt; $k++){
-	if($space6[$k] > 0){
-		pgmove($time[$k], $space6[$k]);
-#
-#--- special treatment, if there are not enough data points, use a marker
-#
-        if($dcnt < 50){
-                pgpt(1, $time[$k], $space6[$k], 3);
-        }
-		$tstart = $k + 1;
-		last OUTER;
-	}
-}
-for($k = $tstart; $k < $cnt; $k++){
-	pgdraw($time[$k], $space6[$k]);
-        if($dcnt < 50){
-                pgpt(1, $time[$k], $space6[$k], 3);
-        }
-}
-pgsci(1);
-$xt = $xmin + 0.05 * $xdiff;
-$yt = $ymax - 0.08 * ($ymax - $ymin);
-pgptext($xt, $yt, 0.0, 0.0,  "/data/swolk/AARON/");
-$xt = $xmin + 0.5 * $xdiff;
-$yt = $ymin - 0.2 * ($ymax - $ymin);
 pgptext($xt, $yt, 0.0, 0.5,  "Time (DOM)");
 
 pgclos();
