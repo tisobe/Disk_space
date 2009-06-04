@@ -6,7 +6,7 @@
 #                                                                                               #
 #               author: t. isobe (tisobe@cfa.harvard.edu)                                       #
 #                                                                                               #
-#               last update: Oct. 29, 2008                                                      #
+#               last update: Jun. 04, 2009                                                      #
 #                                                                                               #
 #################################################################################################
 
@@ -30,13 +30,13 @@ $fig_out  = $atemp[4];
 
 #################################################################################
 
-system("perl $bin_dir/disk_space_check_size.perl");
+system("/opt/local/bin/perl $bin_dir/disk_space_check_size.perl");
 
-system("perl $bin_dir/disk_space_read_dusk.perl");
+system("/opt/local/bin/perl $bin_dir/disk_space_read_dusk.perl");
 
-system("perl $bin_dir/disk_space_read_dusk2.perl");
+system("/opt/local/bin/perl $bin_dir/disk_space_read_dusk2.perl");
 
-system("perl $bin_dir/disk_space_read_dusk5.perl");	#---- /data/swolk added 10/29/08
+system("/opt/local/bin/perl $bin_dir/disk_space_read_dusk5.perl");	#---- /data/swolk added 10/29/08
 
 #system("perl $bin_dir/disk_space_read_dusk3.perl");	#---- /data/mays  removed
 #system("perl $bin_dir/disk_space_read_dusk4.perl");	#---- /data/aaron removed
