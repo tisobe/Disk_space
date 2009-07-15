@@ -7,7 +7,7 @@ use PGPLOT;
 #												#
 #		author: t. isobe (tisobe@cfa.harvard.edu)					#
 #												#
-#		last update: Oct. 30, 2008							#
+#		last update: Jul. 15, 2009							#
 #												#
 #################################################################################################
 
@@ -207,7 +207,7 @@ pgslw(3);
 pglabel("time (DOM)","Disk Space Used (%)", "Disk Space Usage of /data/mta/***");
 pgclos();
 
-system("echo ''|gs -sDEVICE=ppmraw  -r256x256 -q -NOPAUSE -sOutputFile=-  pgplot.ps| $bin_dir/pnmflip -r270 | $bin_dir/ppmtogif > $fig_out/data_mta.gif");
+system("echo ''|/opt/local/bin/gs -sDEVICE=ppmraw  -r256x256 -q -NOPAUSE -sOutputFile=-  pgplot.ps| $bin_dir/pnmflip -r270 | $bin_dir/ppmtogif > $fig_out/data_mta.gif");
 system('rm pgplot.ps');
 
 #####################################################################

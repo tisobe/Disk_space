@@ -7,7 +7,7 @@ use PGPLOT;
 #			       if it is beyond a limit				#
 #										#
 #		author: t. isobe (tisobe@cfa.harvard.edu)			#
-#		last update: Oct  29, 2008					#
+#		last update: Jul  15, 2009					#
 #										#
 #################################################################################
 
@@ -364,7 +364,7 @@ pgptext($xt, $yt, 0.0, 0.5,  "Time (DOM)");
 
 pgclos();
 
-system("echo ''|gs -sDEVICE=ppmraw  -r256x256 -q -NOPAUSE -sOutputFile=-  pgplot.ps| $bin_dir/pnmflip -r270 | $bin_dir/ppmtogif > $fig_out/disk_space1.gif");
+system("echo ''|/opt/local/bin/gs -sDEVICE=ppmraw  -r256x256 -q -NOPAUSE -sOutputFile=-  pgplot.ps| $bin_dir/pnmflip -r270 | $bin_dir/ppmtogif > $fig_out/disk_space1.gif");
 
 
 #
@@ -436,7 +436,7 @@ pgptext($xt, $yt, 0.0, 0.5,  "Time (DOM)");
 
 pgclos();
 
-system("echo ''|gs -sDEVICE=ppmraw  -r256x256 -q -NOPAUSE -sOutputFile=-  pgplot.ps| $bin_dir/pnmflip -r270 | $bin_dir/ppmtogif > $fig_out/disk_space2.gif");
+system("echo ''|/opt/local/bin/gs -sDEVICE=ppmraw  -r256x256 -q -NOPAUSE -sOutputFile=-  pgplot.ps| $bin_dir/pnmflip -r270 | $bin_dir/ppmtogif > $fig_out/disk_space2.gif");
 
 system("rm zspece pgplot.ps");
 
