@@ -7,7 +7,7 @@ use PGPLOT;
 #			       if it is beyond a limit				#
 #										#
 #		author: t. isobe (tisobe@cfa.harvard.edu)			#
-#		last update: Jul  15, 2009					#
+#		last update: Oct  15, 2009					#
 #										#
 #################################################################################
 
@@ -185,7 +185,7 @@ if($check > 0){
 	open(OUT, '>./zline.tmp');
 	print OUT  "$line";
 	close(OUT);
-system("cat ./zline.tmp |mailx -s \"Subject: Disk Space Warning\n\" -r  mta\@head.cfa.harvard.edu isobe\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu 6177214360\@vtext.com");
+system("cat ./zline.tmp |/usr/bin/mailx -s\"Subject: Disk Space Warning\n\" -rmta\@head.cfa.harvard.edu isobe\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu 6177214360\@vtext.com");
 # fixed typo in brad address. BDS 1/28/05
 # add nbizunok. BDS 3/25/05
 # rm nbizunok. BDS 10/03/07
