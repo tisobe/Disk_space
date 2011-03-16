@@ -7,7 +7,7 @@
 #										#
 #	author: t. isobe (tisobe@cfa.harvard.edu)				#
 #										#
-#	last update: Oct. 30, 2008						#
+#	last update: Mar. 16, 2011						#
 #										#
 #################################################################################
 
@@ -16,19 +16,19 @@
 #
 #--- set directories
 #
-$bin_dir  = '/data/mta4/MTA/bin/';
-$run_dir  = '/data/mta/Script/Disk_check/Exc/';
-$web_dir  = '/data/mta/www/mta_disk_space/';
-$data_out = "$web_dir/Data/";
-$fig_out  = "$web_dir/Figs/";
+open(FH, "/data/mta/Script/Disk_check/house_keeping/dir_list");
+@atemp = ();
+whle(<FH>){
+        chomp $_;
+        push(@atemp, $_);
+}
+close(FH);
 
-open(OUT, ">./dir_list");
-print OUT "$bin_dir\n";
-print OUT "$run_dir\n";
-print OUT "$web_dir\n";
-print OUT "$data_out\n";
-print OUT "$fig_out\n";
-close(OUT);
+$bin_dir    = $atemp[0];
+$run_dir    = $atemp[1];
+$web_dir    = $atemp[2];
+$data_out   = $atemp[3];
+$fig_out    = $atemp[4];
 
 ############################################################
 
