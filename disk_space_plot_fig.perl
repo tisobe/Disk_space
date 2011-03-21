@@ -6,7 +6,7 @@
 #                                                                                               #
 #               author: t. isobe (tisobe@cfa.harvard.edu)                                       #
 #                                                                                               #
-#               last update: Mar. 16, 2011                                                      #
+#               last update: Mar. 21, 2011                                                      #
 #                                                                                               #
 #################################################################################################
 
@@ -16,7 +16,7 @@
 #
 open(FH, "/data/mta/Script/Disk_check/house_keeping/dir_list");
 @atemp = ();
-whle(<FH>){
+while(<FH>){
         chomp $_;
         push(@atemp, $_);
 }

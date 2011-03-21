@@ -18,7 +18,7 @@ use PGPLOT;
 
 pen(FH, "/data/mta/Script/Disk_check/house_keeping/dir_list");
 @atemp = ();
-whle(<FH>){
+while(<FH>){
         chomp $_;
         push(@atemp, $_);
 }
