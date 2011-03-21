@@ -7,7 +7,7 @@ use PGPLOT;
 #												#
 #		author: t. isobe (tisobe@cfa.harvard.edu)					#
 #												#
-#		last update: Mar. 16, 2011							#
+#		last update: Mar. 21, 2011							#
 #												#
 #################################################################################################
 
@@ -16,7 +16,7 @@ use PGPLOT;
 #--- set directories
 #
 
-pen(FH, "/data/mta/Script/Disk_check/house_keeping/dir_list");
+open(FH, "/data/mta/Script/Disk_check/house_keeping/dir_list");
 @atemp = ();
 while(<FH>){
         chomp $_;
