@@ -9,7 +9,7 @@ use PGPLOT;
 #												#
 #               author: t. isobe (tisobe@cfa.harvard.edu)                                       #
 #                                                                                               #
-#               last update: Mar. 21, 2011                                                      #
+#               last update: Aug. 16, 2012                                                      #
 #                                                                                               #
 #################################################################################################
 
@@ -17,19 +17,13 @@ use PGPLOT;
 #--- set directories
 #
 
-open(FH, "/data/mta/Script/Disk_check/house_keeping/dir_list");
-@atemp = ();
+open(FH, "/data/mta/Script/Disk_check_linux/house_keeping/dir_list");
 while(<FH>){
-        chomp $_;
-        push(@atemp, $_);
+    chomp $_;
+    @atemp = split(/\s+/, $_);
+    ${$atemp[0]} = $atemp[1];
 }
 close(FH);
-
-$bin_dir    = $atemp[0];
-$run_dir    = $atemp[1];
-$web_dir    = $atemp[2];
-$data_out   = $atemp[3];
-$fig_out    = $atemp[4];
 
 #
 #--- and other settings
@@ -319,7 +313,7 @@ pgslw(3);
 pglabel("Time (DOM)","Disk Space Used (%)", "Disk Space Usage of /data/swolk/");
 pgclos();
 
-system("echo ''|/opt/local/bin/gs -sDEVICE=ppmraw  -r256x256 -q -NOPAUSE -sOutputFile=-  pgplot.ps| $bin_dir/pnmflip -r270 | $bin_dir/pnmcrop -bottom | $bin_dir/ppmtogif > $fig_out/data_swolk.gif");
+system("echo ''|$op_dir/gs -sDEVICE=ppmraw  -r256x256 -q -NOPAUSE -sOutputFile=-  pgplot.ps| $op_dir/pnmflip -r270 | $op_dir/pnmcrop -bottom | $op_dir/ppmtogif > $fig_out/data_swolk.gif");
 system('rm pgplot.ps');
 
 
@@ -409,7 +403,7 @@ pgslw(3);
 pglabel("Time (DOM)","Disk Space Used (%)", "Disk Space Usage of /data/swolk/AARON");
 pgclos();
 
-system("echo ''|gs -sDEVICE=ppmraw  -r256x256 -q -NOPAUSE -sOutputFile=-  pgplot.ps| $bin_dir/pnmflip -r270 | $bin_dir/pnmcrop -bottom | $bin_dir/ppmtogif > $fig_out/data_mays_arron.gif");
+system("echo ''|$op_dir/gs -sDEVICE=ppmraw  -r256x256 -q -NOPAUSE -sOutputFile=-  pgplot.ps| $op_dir/pnmflip -r270 | $op_dir/pnmcrop -bottom | $op_dir/ppmtogif > $fig_out/data_mays_arron.gif");
 system('rm pgplot.ps');
 
 #####################################################################

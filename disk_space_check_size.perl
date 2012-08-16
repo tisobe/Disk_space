@@ -7,7 +7,7 @@ use PGPLOT;
 #			       if it is beyond a limit				#
 #										#
 #		author: t. isobe (tisobe@cfa.harvard.edu)			#
-#		last update: Mar  21, 2011					#
+#		last update: Aug 16, 2012					#
 #										#
 #################################################################################
 
@@ -15,19 +15,14 @@ use PGPLOT;
 #
 #--- set directories
 #
-open(FH, "/data/mta/Script/Disk_check/house_keeping/dir_list");
-@atemp = ();
+open(FH, "/data/mta/Script/Disk_check_linux/house_keeping/dir_list");
 while(<FH>){
-        chomp $_;
-        push(@atemp, $_);
+    chomp $_;
+    @atemp = split(/\s+/, $_);
+    ${$atemp[0]} = $atemp[1];
 }
 close(FH);
 
-$bin_dir    = $atemp[0];
-$run_dir    = $atemp[1];
-$web_dir    = $atemp[2];
-$data_out   = $atemp[3];
-$fig_out    = $atemp[4];
 
 #
 #---- and other settings
@@ -35,14 +30,17 @@ $fig_out    = $atemp[4];
 $set_ymin = 30;
 $set_ymax = 100;
 
+$roll = int(rand 10000);
+$zspace = '/tmp/zspace'.$roll;
+
 #################################################################################
 
 $check = 0;
 #
 #---- /data/mta/
 #
-system("df -k  /data/mta/ > zspace");
-open(FH, "./zspace");
+system("df -k  /data/mta/ > $zspace");
+open(FH, "$zspace");
 while(<FH>){
 	chomp $_;
 	@atemp = split(/\s+/, $_);
@@ -57,13 +55,14 @@ while(<FH>){
 	}
 }
 close(FH);
+system("rm $zspace");
 #
 #---- /data/mta1/
 #--- for /data/mta1/, /data/mta2/, /data/mta3, you need to use
 #--- "ls /data/mta1/", to makes df /data/mta1/ to work. I have no idea why....
 #
-system("ls /data/mta1/ > zspace; df -k /data/mta1/ > zspace");
-open(FH, "./zspace");
+system("ls /data/mta1/ > $zspace; df -k /data/mta1/ > $zspace");
+open(FH, "$zspace");
 while(<FH>){
 	chomp $_;
 	@atemp = split(/\s+/, $_);
@@ -78,11 +77,12 @@ while(<FH>){
 	}
 }
 close(FH);
+system("rm $zspace");
 #
 #--- /data/mta2/
 #
-system("ls /data/mta2/ > zspace; df -k /data/mta2/ > zspace");
-open(FH, "./zspace");
+system("ls /data/mta2/ > $zspace; df -k /data/mta2/ > $zspace");
+open(FH, "$zspace");
 while(<FH>){
 	chomp $_;
 	@atemp = split(/\s+/, $_);
@@ -97,30 +97,12 @@ while(<FH>){
 	}
 }
 close(FH);
-#
-#---- /data/mta3/    this disk is not with mta anymore, but we still monitor
-#
-#system("ls /data/mta3/ > zspace; df -k  /data/mta3/ > zspace");
-#open(FH, "./zspace");
-#while(<FH>){
-#	chomp $_;
-#	@atemp = split(/\s+/, $_);
-#	if($atemp[1] =~ /\d/){
-#		@btemp = split(/\%/, $atemp[4]);
-#		$percent = $btemp[0];
-#		$per3 = $percent;
-#		if($percent > 90){
-#			$check++;
-#			$line = "$line".'/data/mta3/ is at '."$percent".'% capacity'."\n";
-#		}
-#	}
-#}
-#close(FH);
+system("rm $zspace");
 #
 #--- /data/mta4/
 #
-system("df -k  /data/mta4/ > zspace");
-open(FH, "./zspace");
+system("df -k  /data/mta4/ > $zspace");
+open(FH, "$zspace");
 while(<FH>){
 	chomp $_;
 	@atemp = split(/\s+/, $_);
@@ -135,11 +117,12 @@ while(<FH>){
 	}
 }
 close(FH);
+system("rm $zspace");
 #
 #---- /data/swolk/
 #
-system("ls /data/swolk/ > zspace; df -k  /data/swolk/ > zspace");
-open(FH, "./zspace");
+system("ls /data/swolk/ > $zspace; df -k  /data/swolk/ > $zspace");
+open(FH, "$zspace");
 while(<FH>){
 	chomp $_;
 	@atemp = split(/\s+/, $_);
@@ -154,25 +137,7 @@ while(<FH>){
 	}
 }
 close(FH);
-#
-#---- /data/swolk/AARON/
-#
-#system("ls /data/swolk/AARON/> zspace; df -k  /data/swolk/AARON/ > zspace");
-#open(FH, "./zspace");
-#while(<FH>){
-#	chomp $_;
-#	@atemp = split(/\s+/, $_);
-#	if($atemp[1] =~ /\d/){
-#		@btemp = split(/\%/, $atemp[4]);
-#		$percent = $btemp[0];
-#		$per6 = $percent;
-#		if($percent > 95){
-#			$check++;
-#			$line = "$line".'/data/swolk/AARON/ is at '."$percent".'% capacity'."\n";
-#		}
-#	}
-#}
-#close(FH);
+system("rm $zspace");
 
 #
 #---- sending out warning email, if any of the disk exceeded the limit
@@ -182,14 +147,14 @@ if($check > 0){
 	$top = "$top".'  Disk Space Warning:'."\n";
 	$top = "$top"."-----------------------\n\n";
 	$line = "$top"."$line";
-	open(OUT, '>./zline.tmp');
+	open(OUT, ">$zspace");
 	print OUT  "$line";
 	close(OUT);
-system("cat ./zline.tmp |/usr/bin/mailx -s\"Subject: Disk Space Warning\n\" -rmta\@head.cfa.harvard.edu isobe\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu 6177214360\@vtext.com");
+system("cat $zspace |/usr/bin/mailx -s\"Subject: Disk Space Warning\n\" -rmta\@head.cfa.harvard.edu isobe\@head.cfa.harvard.edu brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu 6177214360\@vtext.com");
 # fixed typo in brad address. BDS 1/28/05
 # add nbizunok. BDS 3/25/05
 # rm nbizunok. BDS 10/03/07
-	system("rm ./zline.tmp");
+system("rm $zspace");
 
 }
 #
@@ -222,7 +187,6 @@ close(FH);
 #
 #--- current data in one line
 #
-#$line = "$time\t"."$per0\t"."$per1\t"."$per2\t"."$per3\t"."$per4\t"."$per5\t"."$per6";
 $line = "$time\t"."$per0\t"."$per1\t"."$per2\t"."$per4\t"."$per5\t";
 #
 #--- check whether this line is a duplicate of the past data
@@ -263,7 +227,6 @@ foreach $ent (@save_list){
 	push(@space0, $atemp[1]);	# mta
 	push(@space1, $atemp[2]);	# mta1
 	push(@space2, $atemp[3]);	# mta2
-#	push(@space3, $atemp[4]);	# mta3  ---- discontinued 
 	push(@space4, $atemp[4]);	# mta4
 #
 #--- special cases here. MAYS and AARON added later. put zero to unchecked  past date
@@ -275,15 +238,11 @@ foreach $ent (@save_list){
 	}else{
 		push(@space5, '0');
 	}	
-#	if($atemp[7] =~ /\d/){
-#		push(@space6, $atemp[7]);
-#	}else{
-#		push(@space6, '0');
-#	}	
 	$cnt++;
 }
 #
 #--- setting plotting limits
+#
 @temp = sort{$a<=>$b} @time;
 $min = $temp[0];
 $max = $temp[$cnt -1];
@@ -364,8 +323,8 @@ pgptext($xt, $yt, 0.0, 0.5,  "Time (DOM)");
 
 pgclos();
 
-system("echo ''|/opt/local/bin/gs -sDEVICE=ppmraw  -r256x256 -q -NOPAUSE -sOutputFile=-  pgplot.ps| $bin_dir/pnmflip -r270 | $bin_dir/ppmtogif > $fig_out/disk_space1.gif");
-
+system("echo ''|$op_dir/gs -sDEVICE=ppmraw  -r256x256 -q -NOPAUSE -sOutputFile=-  pgplot.ps| $op_dir/pnmflip -r270 | $op_dir/ppmtogif > $fig_out/disk_space1.gif");
+system("rm pgplot.ps");
 
 #
 #--- a second panel
@@ -436,9 +395,9 @@ pgptext($xt, $yt, 0.0, 0.5,  "Time (DOM)");
 
 pgclos();
 
-system("echo ''|/opt/local/bin/gs -sDEVICE=ppmraw  -r256x256 -q -NOPAUSE -sOutputFile=-  pgplot.ps| $bin_dir/pnmflip -r270 | $bin_dir/ppmtogif > $fig_out/disk_space2.gif");
+system("echo ''|$op_dir/gs -sDEVICE=ppmraw  -r256x256 -q -NOPAUSE -sOutputFile=-  pgplot.ps| $op_dir/pnmflip -r270 | $op_dir/ppmtogif > $fig_out/disk_space2.gif");
 
-system("rm zspece pgplot.ps");
+system("rm pgplot.ps");
 
 
 #####################################################################

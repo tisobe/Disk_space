@@ -6,7 +6,7 @@
 #                                                                                               #
 #               author: t. isobe (tisobe@cfa.harvard.edu)                                       #
 #                                                                                               #
-#               last update: Mar. 21, 2011                                                      #
+#               last update: Aug. 16, 2012                                                      #
 #                                                                                               #
 #################################################################################################
 
@@ -14,34 +14,29 @@
 #
 #--- set directories
 #
-open(FH, "/data/mta/Script/Disk_check/house_keeping/dir_list");
-@atemp = ();
+open(FH, "/data/mta/Script/Disk_check_linux/house_keeping/dir_list");
 while(<FH>){
-        chomp $_;
-        push(@atemp, $_);
+    chomp $_;
+    @atemp = split(/\s+/, $_);
+    ${$atemp[0]} = $atemp[1];
 }
 close(FH);
 
-$bin_dir    = $atemp[0];
-$run_dir    = $atemp[1];
-$web_dir    = $atemp[2];
-$data_out   = $atemp[3];
-$fig_out    = $atemp[4];
 
 #################################################################################
 
-system("/opt/local/bin/perl $bin_dir/disk_space_check_size.perl");
+system("$op_dir/perl $bin_dir/disk_space_check_size.perl");
 
-system("/opt/local/bin/perl $bin_dir/disk_space_read_dusk.perl");
+system("$op_dir/perl $bin_dir/disk_space_read_dusk.perl");
 
-system("/opt/local/bin/perl $bin_dir/disk_space_read_dusk2.perl");
+system("$op_dir/perl $bin_dir/disk_space_read_dusk2.perl");
 
-system("/opt/local/bin/perl $bin_dir/disk_space_read_dusk5.perl");	#---- /data/swolk added 10/29/08
+system("$op_dir/perl $bin_dir/disk_space_read_dusk5.perl");	#---- /data/swolk added 10/29/08
 
 #system("perl $bin_dir/disk_space_read_dusk3.perl");	#---- /data/mays  removed
 #system("perl $bin_dir/disk_space_read_dusk4.perl");	#---- /data/aaron removed
 
-system("rm -r param ./dusk* zspace dir_list");
+system("rm -r param ./dusk*");
 
 #
 #--- find today's date

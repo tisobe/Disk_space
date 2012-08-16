@@ -7,7 +7,7 @@
 #										#
 #	author: t. isobe (tisobe@cfa.harvard.edu)				#
 #										#
-#	last update: Mar. 21, 2011						#
+#	last update: Aug. 16, 2012						#
 #										#
 #################################################################################
 
@@ -16,19 +16,14 @@
 #
 #--- set directories
 #
-open(FH, "/data/mta/Script/Disk_check/house_keeping/dir_list");
-@atemp = ();
+open(FH, "/data/mta/Script/Disk_check_linux/house_keeping/dir_list");
 while(<FH>){
-        chomp $_;
-        push(@atemp, $_);
+    chomp $_;
+    @atemp = split(/\s+/, $_);
+    ${$atemp[0]} = $atemp[1];
 }
 close(FH);
 
-$bin_dir    = $atemp[0];
-$run_dir    = $atemp[1];
-$web_dir    = $atemp[2];
-$data_out   = $atemp[3];
-$fig_out    = $atemp[4];
 
 ############################################################
 
