@@ -7,7 +7,7 @@
 #										#
 #	author: t. isobe (tisobe@cfa.harvard.edu)				#
 #										#
-#	last update: Aug. 16, 2012						#
+#	last update: Aug. 20, 2012						#
 #										#
 #################################################################################
 
@@ -16,7 +16,7 @@
 #
 #--- set directories
 #
-open(FH, "/data/mta/Script/Disk_check_linux/house_keeping/dir_list");
+open(FH, "/data/mta/Script/Disk_check/house_keeping/dir_list");
 while(<FH>){
     chomp $_;
     @atemp = split(/\s+/, $_);

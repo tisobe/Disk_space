@@ -9,13 +9,25 @@ send out warning email.
 ########
 cron job
 ########
-0  3 * * * cd /data/mta/Script/Disk_check/Exc/; /data/mta4/MTA/bin/disk_space_wrap_script1 
-0 12 * * * cd /data/mta/Script/Disk_check/Exc/; /data/mta4/MTA/bin/disk_space_wrap_script2
+0  3 * * * cd /data/mta/Script/Disk_check/Exc/; /data/mta/MTA/bin/disk_space_wrap_script1 
+0 12 * * * cd /data/mta/Script/Disk_check/Exc/; /data/mta/MTA/bin/disk_space_wrap_script2
 
 The first task finds disk usages (it may takes more than 2 hrs), and the second one extracts
 data and plots them.
 
 The script must be run on rhodes.
+
+###########
+Directories
+###########
+/data/mta/Script/Disk_check/house_keeping/dir_list
+
+$bin_dir  = '/data/mta/MTA/bin/';
+$run_dir  = '/data/mta/Script/Disk_check/Exc/';
+$web_dir  = '/data/mta/www/mta_disk_space/';
+$data_out = "/data/mta/Script/Disk_check/Data/";
+$fig_out  = "/data/mta/www/mta_disk_space/Figs/";
+
 
 #######
 Scripts
@@ -45,16 +57,7 @@ A control script for "disk_space_plot_fig.perl"
 disk_space_run_dusk.perl
 ------------------------
 This script runs a task "dusk" on each disk, and finds out disk usages.
-It also defines "dir_list" so that other scripts can read the directory list.
 This script needs more than 2 hrs to complete; so run during the early morning.
-
-Directories:
-		$bin_dir  = '/data/mta4/MTA/bin/';
-		$run_dir  = '/data/mta/Script/Disk_check/Exc/';
-		$web_dir  = '/data/mta/www/mta_disk_space/';
-		$data_out = "$web_dir/Data/";
-		$fig_out  = "$web_dir/Figs/";
-
 
 Input:		None
 

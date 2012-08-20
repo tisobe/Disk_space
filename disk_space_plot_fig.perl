@@ -14,7 +14,7 @@
 #
 #--- set directories
 #
-open(FH, "/data/mta/Script/Disk_check_linux/house_keeping/dir_list");
+open(FH, "/data/mta/Script/Disk_check/house_keeping/dir_list");
 while(<FH>){
     chomp $_;
     @atemp = split(/\s+/, $_);

@@ -3,7 +3,7 @@ source $HEADAS/headas-init.csh
 
 source /home/mta/.ascrc
 
-/usr/bin/perl /data/mta/Script/Disk_check_linux/Disk_space/disk_space_plot_fig.perl
+/usr/bin/perl /data/mta/MTA/bin/disk_space_plot_fig.perl
 
 chgrp mtagroup /data/mta_www/mta_disk_space/Figs/*
 
