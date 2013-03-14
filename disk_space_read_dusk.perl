@@ -7,7 +7,7 @@ use PGPLOT;
 #												#
 #		author: t. isobe (tisobe@cfa.harvard.edu)					#
 #												#
-#		last update: Aug. 20, 2012							#
+#		last update: Mar  14, 2013							#
 #												#
 #################################################################################################
 
@@ -214,18 +214,8 @@ sub conv_date_dom{
 
         $ydiff = $tyear - 1999;
         $acc_date = 365 * $ ydiff;
-        if($tyear > 2000){
-                $acc_date++;
-        }
-        if($tyear > 2004){
-                $acc_date++;
-        }
-        if($tyear > 2008){
-                $acc_date++;
-        }
-        if($tyear > 2012){
-                $acc_date++;
-        }
+        $add = int(0.25 * ($ydiff + 2));
+        $acc_date += $add;
 
         if($tmonth == 1){
                 $dom =   1;
@@ -252,7 +242,8 @@ sub conv_date_dom{
         }elsif($tmonth == 12){
                 $dom = 335;
         }
-        if($tyear == 2000 || $tyear == 2004 || $tyear == 2008 || $tyear == 2012){
+        $chk = 4.0 * int(0.25 * $tyear);
+        if($chk == $tyear){
                 if($tmonth > 2){
                         $dom++;
                 }
