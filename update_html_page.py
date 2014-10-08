@@ -1,4 +1,4 @@
-#!/usr/bin/env /data/fido/censka/bin/python
+#!/usr/bin/env /proj/sot/ska/bin/python
 
 #################################################################################
 #                                                                               #
@@ -6,7 +6,7 @@
 #                                                                               #
 #       author: t. isobe (tisobe@cfa.harvard.edu)                               #
 #                                                                               #
-#       last update: Apr 22, 2013                                               #
+#       last update: Jul 31, 2014                                               #
 #                                                                               #
 #################################################################################
 

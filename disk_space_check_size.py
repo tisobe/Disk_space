@@ -1,4 +1,4 @@
-#!/usr/bin/env /data/fido/censka/bin/python
+#!/usr/bin/env /proj/sot/ska/bin/python
 
 #################################################################################
 #                                                                               #
@@ -7,7 +7,7 @@
 #                                                                               #
 #       author: t. isobe (tisobe@cfa.harvard.edu)                               #
 #                                                                               #
-#       last update: Apr 22, 2013                                               #
+#       last update: Aug 05, 2014                                               #
 #                                                                               #
 #################################################################################
 
@@ -115,6 +115,24 @@ def check_disk_space():
     if per5 > 95:
         chk += 1
         line = line + dName + ' is at ' + str(per5) + '% capacity\n'
+
+#
+#--- /data/mays/
+#
+    dName = '/data/mays'
+    per6 = find_disk_size(dName)
+    if per6 > 95:
+        chk += 1
+        line = line + dName + ' is at ' + str(per6) + '% capacity\n'
+
+#
+#--- /data/mta_www/
+#
+    dName = '/data/mta_www'
+    per7 = find_disk_size(dName)
+    if per7 > 95:
+        chk += 1
+        line = line + dName + ' is at ' + str(per7) + '% capacity\n'
 #
 #--- if any of the disk capacities are over 95%, send out a warning email
 #
@@ -124,7 +142,7 @@ def check_disk_space():
 #--- update data table
 #
     per3 = 0;
-    update_datatable(per0, per1, per2, per3, per4, per5)
+    update_datatable(per0, per1, per2, per3, per4, per5, per6, per7)
 #
 #--- plot data
 #
@@ -156,8 +174,11 @@ def find_disk_size(dName):
         atemp = re.split('\s+|\t+', ent)
         try:
             float(atemp[1])
-            btemp = re.split('\%', atemp[4])
-            percent = btemp[0]                      #---- disk capacity in percent (%)
+            for test in atemp:
+                m = re.search('%', test)
+                if m is not None:
+                    btemp = re.split('\%', test)
+                    percent = btemp[0]                      #---- disk capacity in percent (%)
         except:
             pass
 
@@ -191,7 +212,7 @@ def send_mail(line):
 #--- update_datatable: appends newest data to disk space data table                          ---
 #-----------------------------------------------------------------------------------------------
 
-def update_datatable(per0, per1, per2, per3, per4, per5):
+def update_datatable(per0, per1, per2, per3, per4, per5, per6, per7):
     """
     this function appends the newest data to the disk space data table
     Input: per0 ... per5: new measures for each disk. currently per3 is empty
@@ -216,7 +237,7 @@ def update_datatable(per0, per1, per2, per3, per4, per5):
 #
 #--- today's data
 #
-    line  = str(dom) + '\t' + str(per0) + '\t' + str(per1) + '\t' + str(per2) + '\t' + str(per4) + '\t' + str(per5) + '\t'
+    line  = str(dom) + '\t' + str(per0) + '\t' + str(per1) + '\t' + str(per2) + '\t' + str(per4) + '\t' + str(per5) + '\t' + str(per6) + '\t' + str(per7) + '\t'
 #
 #--- append to the data table
 #
@@ -251,15 +272,25 @@ def historyPlots():
     space2 = []         #--- /data/mta2/
     space4 = []         #--- /data/mta4/
     space5 = []         #--- /data/swolk/
+    space6 = []         #--- /data/mays/
+    space7 = []         #--- /data/mta_www/
 
+    ochk   = 0
     for ent in data:
         atemp = re.split('\s+|\t+', ent)
-        time.append(float(atemp[0]))
-        space0.append(float(atemp[1]))
-        space1.append(float(atemp[2]))
-        space2.append(float(atemp[3]))
-        space4.append(float(atemp[4]))
-        space5.append(float(atemp[5]))
+        val = float(atemp[0])
+        if val > ochk:
+            ochk = val
+            time.append(val)
+            space0.append(float(atemp[1]))
+            space1.append(float(atemp[2]))
+            space2.append(float(atemp[3]))
+            space4.append(float(atemp[4]))
+            space5.append(float(atemp[5]))
+            space6.append(float(atemp[6]))
+            space7.append(float(atemp[7]))
+        else:
+            continue
 #
 #---  x axis plotting range
 # 
@@ -279,11 +310,11 @@ def historyPlots():
         xSets.append(time)
 
     ySets.append(space0)
-    ySets.append(space1)
-    ySets.append(space2)
+    ySets.append(space7)
+    ySets.append(space4)
     xname = 'Time (DOM)'
     yname = 'Capacity Filled (%)'
-    entLabels = ['/data/mta/', '/data/mta1/', '/data/mta2/']
+    entLabels = ['/data/mta/', '/data/mta_www/', '/data/mta4/']
 
     plotPanel(xmin, xmax, ymin, ymax, xSets, ySets, xname, yname, entLabels)
 
@@ -298,15 +329,32 @@ def historyPlots():
     for i in range(0, 2):
         xSets.append(time)
 
-    ySets.append(space4)
+    ySets.append(space6)
     ySets.append(space5)
     xname = 'Time (DOM)'
     yname = 'Capacity Filled (%)'
-    entLabels = ['/data/mta4/', '/data/swolk/']
+    entLabels = ['/data/mays/', '/data/swolk/']
 
     plotPanel(xmin, xmax, ymin, ymax, xSets, ySets, xname, yname, entLabels)
 
     cmd = 'mv out.png ' + fig_out + 'disk_space2.png'
+    os.system(cmd)
+
+
+    xSets = []
+    ySets = []
+    for i in range(0, 2):
+        xSets.append(time)
+
+    ySets.append(space1)
+    ySets.append(space2)
+    xname = 'Time (DOM)'
+    yname = 'Capacity Filled (%)'
+    entLabels = ['/data/mta1/', '/data/mta2/']
+
+    plotPanel(xmin, xmax, ymin, ymax, xSets, ySets, xname, yname, entLabels)
+
+    cmd = 'mv out.png ' + fig_out + 'disk_space3.png'
     os.system(cmd)
 
 
@@ -405,7 +453,7 @@ def plotPanel(xmin, xmax, ymin, ymax, xSets, ySets, xname, yname, entLabels):
 #
 #--- save the plot in png format
 #
-    plt.savefig('out.png', format='png', dpi=100)
+    plt.savefig('out.png', format='png', dpi=140)
 
 
 #-----------------------------------------------------------------------------------------------
@@ -491,7 +539,7 @@ def plotPanel2(xmin, xmax, ymin, ymax, xSets, ySets, xname, yname, entLabels):
 #
 #--- save the plot in png format
 #
-    plt.savefig('out.png', format='png', dpi=100)
+    plt.savefig('out.png', format='png', dpi=140)
 
 
 #--------------------------------------------------------------------

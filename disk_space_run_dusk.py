@@ -1,4 +1,4 @@
-#!/usr/bin/env /data/fido/censka/bin/python
+#!/usr/bin/env /proj/sot/ska/bin/python
 
 #################################################################################
 #                                                                               #
@@ -7,7 +7,7 @@
 #                                                                               #
 #       author: t. isobe (tisobe@cfa.harvard.edu)                               #
 #                                                                               #
-#       last update: Apr 22, 2013                                               #
+#       last update: Ayg 05, 2014                                               #
 #                                                                               #
 #################################################################################
 
@@ -50,12 +50,22 @@ def disk_space_run_dusk():
 #
 #--- /data/mta/
 #
-    cmd = 'cd /data/mta; /usr/local/bin/dusk > ' + run_dir + '/dusk_mta'
+    cmd = 'cd /data/mta; nice -n15 /usr/local/bin/dusk > ' + run_dir + '/dusk_mta'
     os.system(cmd)
 #
 #--- /data/mta4/
 #
-    cmd = 'cd /data/mta4; /usr/local/bin/dusk > ' + run_dir + '/dusk_mta4'
+    cmd = 'cd /data/mta4; nice -n15  /usr/local/bin/dusk > ' + run_dir + '/dusk_mta4'
+    os.system(cmd)
+#
+#--- /data/mays/
+#
+    cmd = 'cd /data/mays; nice -n15  /usr/local/bin/dusk > ' + run_dir + '/dusk_mays'
+    os.system(cmd)
+#
+#--- /data/mta_www/
+#
+    cmd = 'cd /data/mta_www; nice -n15  /usr/local/bin/dusk > ' + run_dir + '/dusk_www'
     os.system(cmd)
 #
 #--- /data/swolk/MAYS/      --- retired

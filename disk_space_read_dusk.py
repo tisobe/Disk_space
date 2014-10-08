@@ -1,4 +1,4 @@
-#!/usr/bin/env /data/fido/censka/bin/python
+#!/usr/bin/env /proj/sot/ska/bin/python
 
 #################################################################################
 #                                                                               #
@@ -6,7 +6,7 @@
 #                                                                               #
 #       author: t. isobe (tisobe@cfa.harvard.edu)                               #
 #                                                                               #
-#       last update: Apr 22, 2013                                               #
+#       last update: Aug 11, 2014                                               #
 #                                                                               #
 #################################################################################
 
@@ -69,11 +69,17 @@ def disk_space_read_dusk():
     pastData = data_out + 'disk_data_mta4'
     plot_dusk_result(diskName, duskName, nameList, pastData)
 
-#    diskName = '/data/swolk/'
-#    nameList = ['MAYS']
-#    duskName = 'dusk_swolk_out'
-#    pastData = data_out + 'disk0_data_swolk'
-#    plot_dusk_result(diskName, duskName, nameList, pastData)
+    diskName = '/data/mays/'
+    nameList = ['MTA']
+    duskName = 'dusk_mays'
+    pastData = data_out + 'disk_data_mays'
+    plot_dusk_result(diskName, duskName, nameList, pastData)
+
+    diskName = '/data/mta_www/'
+    nameList = ['ap_report', 'mp_reports','mta_max_exp']
+    duskName = 'dusk_www'
+    pastData = data_out + 'disk_data_www'
+    plot_dusk_result(diskName, duskName, nameList, pastData)
 
 #-----------------------------------------------------------------------------------------------
 #-----------------------------------------------------------------------------------------------
@@ -132,7 +138,10 @@ def plot_dusk_result(diskName, duskName, nameList, pastData):
 #
 #---- start plotting history data
 #
-    plot_history_trend(diskName, duskName, nameList, pastData)
+    try:
+        plot_history_trend(diskName, duskName, nameList, pastData)
+    except:
+        pass
 
 #-----------------------------------------------------------------------------------------------
 #-----------------------------------------------------------------------------------------------
@@ -170,11 +179,12 @@ def plot_history_trend(diskName, duskName, nameList, pastData):
 
 
     xSets = [domTime]
-    xmin  = min(domTime)
+#    xmin  = min(domTime)
+#    xdiff = xmax - xmin
+#    xmin  = int(xmin - 0.1 * xdiff)
+    xmin  = 1000                                #---- the earliest data starts DOM ~ 1000
     xmax  = max(domTime)
     xdiff = xmax - xmin
-    xmin  = int(xmin - 0.1 * xdiff)
-    xmin  = 1000                                #---- the earliest data starts DOM ~ 1000
     xmax  = int(xmax + 0.1 * xdiff)
     xname = 'Time (DOM)'
     yname = 'Disk Capacity Used (%)'
@@ -186,10 +196,23 @@ def plot_history_trend(diskName, duskName, nameList, pastData):
         ymin  = min(yval)
         ymax  = max(yval)
         ydiff = ymax - ymin
-        ymin  = int(ymin - 0.1 * ydiff)
-        if ymin < 0:
+        if ydiff == 0:
             ymin = 0
-        ymax  = int(ymax + 0.1 * ydiff)
+            if ymax < 1:
+                ymax == 5
+
+#        ymin  = int(ymin - 0.1 * ydiff)
+#        if ymin < 0:
+#            ymin = 0
+        ymin  = 0
+        ymaxt = int(ymax + 0.1 * ydiff) 
+
+        if ymaxt < ymax:
+            ymax += 2
+            ymax = int(ymax)
+        else:
+            ymax = ymaxt
+
 
         ySets     = [yval]
         entLabels = [ent]
@@ -212,12 +235,19 @@ def diskCapacity(diskName):
     f    = open(zspace, 'r')
     data = [line.strip() for line in f.readlines()]
     f.close()
+    disk_capacity = 'na'
+
     for ent in data:
-        m = re.search('vol', ent)
-        if m is not None:
-            atemp = re.split('\s+|\t+', ent)
-            disk_capacity = float(atemp[1])
-            break
+        try:
+            atemp  = re.split('\s+', ent)
+            val = float(atemp[1])
+            for test in atemp:
+                m = re.search('%', test)
+                if m is not None:
+                    disk_capacity = val
+                    break
+        except:
+            pass
 
     return disk_capacity
 
