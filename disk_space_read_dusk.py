@@ -6,7 +6,7 @@
 #                                                                               #
 #       author: t. isobe (tisobe@cfa.harvard.edu)                               #
 #                                                                               #
-#       last update: Aug 11, 2014                                               #
+#       last update: Oct 27, 2014                                               #
 #                                                                               #
 #################################################################################
 
@@ -79,6 +79,12 @@ def disk_space_read_dusk():
     nameList = ['ap_report', 'mp_reports','mta_max_exp']
     duskName = 'dusk_www'
     pastData = data_out + 'disk_data_www'
+    plot_dusk_result(diskName, duskName, nameList, pastData)
+
+    diskName = '/proj/rac/ops/'
+    nameList = ['CRM2', 'CRM', 'ephem', 'CRM3']
+    duskName = 'proj_ops'
+    pastData = data_out + 'disk_proj_ops'
     plot_dusk_result(diskName, duskName, nameList, pastData)
 
 #-----------------------------------------------------------------------------------------------

@@ -1,15 +1,7 @@
-source /home/mta/.ascrc
-
 cd /data/mta/Script/Disk_check/Exc
 
-rm -rf param
-mkdir param
-source /home/mta/bin/reset_param
+source /proj/sot/ska/bin/ska_envs.csh
 
-setenv PYTHONPATH "/usr/local/lib/python2.7/site-packages:$PYTHONPATH"
-
-set path = (/home/ascds/DS.release/bin/  $path)
-set path = (/home/ascds/DS.release/ots/bin/ $path)
 
 /data/mta/Script/Disk_check/Scripts/disk_space_check_size.py
 

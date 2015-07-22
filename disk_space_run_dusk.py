@@ -7,7 +7,7 @@
 #                                                                               #
 #       author: t. isobe (tisobe@cfa.harvard.edu)                               #
 #                                                                               #
-#       last update: Ayg 05, 2014                                               #
+#       last update: Oct 27, 2014                                               #
 #                                                                               #
 #################################################################################
 
@@ -66,6 +66,11 @@ def disk_space_run_dusk():
 #--- /data/mta_www/
 #
     cmd = 'cd /data/mta_www; nice -n15  /usr/local/bin/dusk > ' + run_dir + '/dusk_www'
+    os.system(cmd)
+#
+#--- /proj/rac/ops/
+#
+    cmd = 'cd /proj/rac/ops/; nice -n15  /usr/local/bin/dusk > ' + run_dir + '/proj_ops'
     os.system(cmd)
 #
 #--- /data/swolk/MAYS/      --- retired

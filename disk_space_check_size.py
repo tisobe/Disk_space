@@ -7,7 +7,7 @@
 #                                                                               #
 #       author: t. isobe (tisobe@cfa.harvard.edu)                               #
 #                                                                               #
-#       last update: Aug 05, 2014                                               #
+#       last update: Jan 20, 2015                                               #
 #                                                                               #
 #################################################################################
 
@@ -75,7 +75,7 @@ def check_disk_space():
 #
     dName = '/data/mta'
     per0 = find_disk_size(dName)
-    if per0 > 95:
+    if per0 > 91:
         chk += 1
         line = dName + ' is at ' + str(per0) + '% capacity\n'
 
@@ -134,6 +134,14 @@ def check_disk_space():
         chk += 1
         line = line + dName + ' is at ' + str(per7) + '% capacity\n'
 #
+#--- /proj/rac/
+#
+    dName = '/proj/rac'
+    per8 = find_disk_size(dName)
+    if per8 > 95:
+        chk += 1
+        line = line + dName + ' is at ' + str(per8) + '% capacity\n'
+#
 #--- if any of the disk capacities are over 95%, send out a warning email
 #
     if chk > 0:
@@ -142,7 +150,7 @@ def check_disk_space():
 #--- update data table
 #
     per3 = 0;
-    update_datatable(per0, per1, per2, per3, per4, per5, per6, per7)
+    update_datatable(per0, per1, per2, per3, per4, per5, per6, per7, per8)
 #
 #--- plot data
 #
@@ -201,7 +209,7 @@ def send_mail(line):
     f.write(line)
     f.close()
 
-#    cmd = 'cat ' + zspace + ' |mailx -s\"Subject: Disk Space Warning\n\" isobe\@head.cfa.harvard.edu  brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu 6177214360\@vtext.com'
+#    cmd = 'cat ' + zspace + ' |mailx -s\"Subject: Disk Space Warning\n\" isobe\@head.cfa.harvard.edu  brad\@head.cfa.harvard.edu swolk\@head.cfa.harvard.edu'
     cmd = 'cat ' + zspace + ' |mailx -s\"Subject: Disk Space Warning\n\" isobe\@head.cfa.harvard.edu'
     os.system(cmd)
     cmd = 'rm -rf ' + zspace
@@ -212,7 +220,7 @@ def send_mail(line):
 #--- update_datatable: appends newest data to disk space data table                          ---
 #-----------------------------------------------------------------------------------------------
 
-def update_datatable(per0, per1, per2, per3, per4, per5, per6, per7):
+def update_datatable(per0, per1, per2, per3, per4, per5, per6, per7, per8):
     """
     this function appends the newest data to the disk space data table
     Input: per0 ... per5: new measures for each disk. currently per3 is empty
@@ -237,7 +245,7 @@ def update_datatable(per0, per1, per2, per3, per4, per5, per6, per7):
 #
 #--- today's data
 #
-    line  = str(dom) + '\t' + str(per0) + '\t' + str(per1) + '\t' + str(per2) + '\t' + str(per4) + '\t' + str(per5) + '\t' + str(per6) + '\t' + str(per7) + '\t'
+    line  = str(dom) + '\t' + str(per0) + '\t' + str(per1) + '\t' + str(per2) + '\t' + str(per4) + '\t' + str(per5) + '\t' + str(per6) + '\t' + str(per7) + '\t' + str(per8) + '\t'
 #
 #--- append to the data table
 #
@@ -274,6 +282,7 @@ def historyPlots():
     space5 = []         #--- /data/swolk/
     space6 = []         #--- /data/mays/
     space7 = []         #--- /data/mta_www/
+    space8 = []         #--- /proj/rac/ops/
 
     ochk   = 0
     for ent in data:
@@ -289,6 +298,7 @@ def historyPlots():
             space5.append(float(atemp[5]))
             space6.append(float(atemp[6]))
             space7.append(float(atemp[7]))
+            space8.append(float(atemp[8]))
         else:
             continue
 #
@@ -355,6 +365,22 @@ def historyPlots():
     plotPanel(xmin, xmax, ymin, ymax, xSets, ySets, xname, yname, entLabels)
 
     cmd = 'mv out.png ' + fig_out + 'disk_space3.png'
+    os.system(cmd)
+
+
+    xSets = []
+    ySets = []
+    for i in range(0, 2):
+        xSets.append(time)
+
+    ySets.append(space8)
+    xname = 'Time (DOM)'
+    yname = 'Capacity Filled (%)'
+    entLabels = ['/proj/rac/ops/']
+
+    plotPanel(xmin, xmax, ymin, ymax, xSets, ySets, xname, yname, entLabels)
+
+    cmd = 'mv out.png ' + fig_out + 'disk_space4.png'
     os.system(cmd)
 
 
