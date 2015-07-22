@@ -1,0 +1,25 @@
+source /home/mta/.ascrc
+
+cd /data/mta/Script/Disk_check/Exc
+
+rm -rf param
+mkdir param
+source /home/mta/bin/reset_param
+
+setenv PYTHONPATH "/usr/local/lib/python2.7/site-packages:$PYTHONPATH"
+
+set path = (/home/ascds/DS.release/bin/  $path)
+set path = (/home/ascds/DS.release/ots/bin/ $path)
+
+
+/data/mta/Script/Disk_check/Scripts/disk_space_run_dusk.py
+/data/mta/Script/Disk_check/Scripts/disk_space_read_dusk.py
+
+/data/mta/Script/Disk_check/Scripts/update_html_page.py
+
+rm -rf /data/tma/Script/Disk_check/Scripts/Exc/dusk*
+
+chgrp mtagroup /data/mta_www/mta_disk_space/Figs/*
+chgrp mtagroup  /data/mta/Script/Disk_check/Data/*
+chgrp mtagroup  /data/mta/Script/Disk_check/Exc/*
+
