@@ -7,7 +7,7 @@
 #                                                                               #
 #       author: t. isobe (tisobe@cfa.harvard.edu)                               #
 #                                                                               #
-#       last update: Jan 20, 2015                                               #
+#       last update: Jan 29, 2018                                               #
 #                                                                               #
 #################################################################################
 
@@ -136,11 +136,11 @@ def check_disk_space():
 #
 #--- /proj/rac/
 #
-    dName = '/proj/rac'
-    per8 = find_disk_size(dName)
-    if per8 > 95:
-        chk += 1
-        line = line + dName + ' is at ' + str(per8) + '% capacity\n'
+##    dName = '/proj/rac'
+##    per8 = find_disk_size(dName)
+##    if per8 > 95:
+##        chk += 1
+##        line = line + dName + ' is at ' + str(per8) + '% capacity\n'
 #
 #--- if any of the disk capacities are over 95%, send out a warning email
 #
