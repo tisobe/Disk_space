@@ -7,7 +7,7 @@
 #                                                                               #
 #       author: t. isobe (tisobe@cfa.harvard.edu)                               #
 #                                                                               #
-#       last update: Jan 29, 2018                                               #
+#       last update: Feb 07, 2018                                               #
 #                                                                               #
 #################################################################################
 
@@ -141,6 +141,7 @@ def check_disk_space():
 ##    if per8 > 95:
 ##        chk += 1
 ##        line = line + dName + ' is at ' + str(per8) + '% capacity\n'
+per8 = 0
 #
 #--- if any of the disk capacities are over 95%, send out a warning email
 #
